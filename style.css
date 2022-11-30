@@ -1,0 +1,109 @@
+:root{
+    --head-color: rgb(236, 15, 70);
+    --head-table-color: rgb(7, 101, 224);
+    --dark-blue: rgb(3, 3, 131);
+}
+*{
+    user-select: none;
+}
+div{
+    display: flex;
+    justify-content: center;
+}
+h1{
+    background-image: linear-gradient(var(--head-color),rgb(201, 82, 108));
+    color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    display: inline-block;
+    font-family: cursive;
+}
+
+body{
+    text-align: center;
+}
+
+table{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    overflow: hidden;
+}
+    
+
+th{
+    color: var(--head-table-color) !important;
+}
+td{
+    color: var(--dark-blue) !important;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+td:hover{
+    background-color: var(--head-color) !important;
+    color: white !important;
+    /* transform: scale(1.2); */
+    transition: 0.5s;
+}
+
+
+.search-name{
+    justify-content: center;
+    display: flex;
+}
+
+input{
+    font-size: 20px !important;
+    border-radius: 10px;
+}
+
+.inp{
+    display: flex;
+    justify-content: center;
+}
+
+button{
+    border-radius: 10px !important;
+}
+
+.form{
+    justify-content: center;
+}
+
+.all-inp,.all-inp1{
+    margin-top: 50px;
+}
+
+#btn{
+    padding: 2px 50px;
+    border: 1px solid black;
+    text-decoration: none;
+}
+
+
+#alert1,#alert2,#alert3,#alert4,#alert5,#alert6,#alert7,#alert8{
+    color: red;
+}
+
+#show{
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+label{
+    margin-left: 20px;
+    margin-top: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
