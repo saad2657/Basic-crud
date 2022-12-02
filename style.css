@@ -94,7 +94,10 @@ label{
     margin-top: 12px;
 }
 
-
+.left{
+    display: flex;
+    justify-content: flex-start;
+}
 
 
 

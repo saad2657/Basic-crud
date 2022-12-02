@@ -1,72 +1,6 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
-let table = document.getElementById('container')
-let tabBody = document.getElementById('tbody')
-let dyn_data;
-let tab;
-function responseData() {
-    fetch('http://172.16.100.89:3000/users')
-        .then(data => { return data.json() })
-        .then(alldata => {
-            dyn_data = alldata;
-            tab = setData(dyn_data.users)
-            tabBody.innerHTML = tab;
-        })
-        .catch(error => {
-            return error
-        })
-}
-
-if (id == null) {
-    responseData()
-}
-
-
-function searchMe() {
-    let myInp = document.getElementById('search').value.toUpperCase()
-    let tr = table.getElementsByTagName('tr')
-    for (var i = 0; i < tr.length; i++) {
-        let td = tr[i].getElementsByTagName('td')[1]
-        if (td) {
-            let textVal = td.textContent
-            if (textVal.toUpperCase().indexOf(myInp) > -1) {
-                tr[i].style.display = ''
-            } else {
-                tr[i].style.display = 'none'
-            }
-        }
-    }
-    // let myInp = document.getElementById('search')
-    // let res = []
-    // dyn_data = dyn_data.filter(e => (e.name.indexOf(myInp.value) > -1) && res.push(e))
-    // let tab = setData(dyn_data)
-    // tabBody.innerHTML = tab
-}
-
-
-function setData(data) {
-    let tab = ''
-    console.log(data)
-    for (var obj of dyn_data.users) {
-        tab += `
-              <tr class='main-tr'>
-                    <td>${obj.id}</td>
-                    <td class='name'>${obj.name}</td>
-                    <td>${obj.username}</td>
-                    <td>${obj.email}</td>
-                    <td>${obj.address}</td>
-                    <td>${obj.company}</td>
-                    <td>${obj.phone}</td>
-                    <td>${obj.city}</td>
-                    <td>${obj.password}</td>
-                    <td><button onclick="updatePostWithFetch(${obj.id})">Edit</button><button id="show4" onclick="deleteRow(${obj.id})">Delete</button></td>
-                </tr>`
-    }
-
-    return tab
-}
-
 
 let myName = document.getElementById('name')
 let userName = document.getElementById('username')
@@ -77,43 +11,31 @@ let phone = document.getElementById('phone')
 let city = document.getElementById('city')
 let password = document.getElementById('password')
 
-console.log()
 
 
-function typeData() {
-    window.location.assign('add.html')
-}
+// Add row from API
 
-
-function addRow() {
-    for (var i = 0; i < tr.length; i++) {
-        let tr = document.getElementById('tr')
-        tr.innerHTML = `
-                    <td>${i}</td>
-                    <td>${myName.value}</td>
-                    <td>${userName.value}</td>
-                    <td>${email.value}</td>
-                    <td>${address.value}</td>
-                    <td>${company.value}</td>
-                    <td>${phone.value}</td>
-                    <td>${city.value}</td>
-                    <td>${password.value}</td>
-                   `
-    }
-
-}
-
-
+let alert1 = document.getElementById('alert1');
+let alert2 = document.getElementById('alert2');
+let alert3 = document.getElementById('alert3');
+let alert4 = document.getElementById('alert4');
+let alert5 = document.getElementById('alert5');
+let alert6 = document.getElementById('alert6');
+let alert7 = document.getElementById('alert7');
+let alert8 = document.getElementById('alert8');
+let form = document.getElementById('form');
+let showPass = document.getElementById('show');
+let showHide = document.getElementById('text');
 
 if (id != null) {
     getOne()
 }
 
+
 function getOne() {
     fetch('http://172.16.100.89:3000/users/' + id)
         .then(data => { return data.json() })
         .then(res => {
-            // console.log(res.data);
             let data = res.data;
             patchValues(data);
         })
@@ -121,7 +43,6 @@ function getOne() {
             return error
         })
 }
-
 
 function patchValues(resposne) {
     myName.value = resposne.name;
@@ -133,21 +54,6 @@ function patchValues(resposne) {
     city.value = resposne.city;
     password.value = resposne.password;
 }
-
-
-
-
-// Add row from API
-
-let alert1 = document.getElementById('alert1')
-let alert2 = document.getElementById('alert2')
-let alert3 = document.getElementById('alert3')
-let alert4 = document.getElementById('alert4')
-let alert5 = document.getElementById('alert5')
-let alert6 = document.getElementById('alert6')
-let alert7 = document.getElementById('alert7')
-let alert8 = document.getElementById('alert8')
-let form = document.getElementById('form')
 
 function postData(e) {
     console.log(e);
@@ -258,7 +164,7 @@ function postWithFetch() {
             password: password.value
         }),
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+            'Content-type': 'application/json',
         }
     })
         .then(res => { return res.json() })
@@ -270,11 +176,6 @@ function postWithFetch() {
         })
         .catch(error => console.log(error))
 }
-
-function updatePostWithFetch(id) {
-    window.location.href = `add.html?id=${id}`;
-}
-
 
 function updateData() {
     fetch('http://172.16.100.89:3000/users/' + id, {
@@ -303,13 +204,6 @@ function updateData() {
         .catch(error => console.log(error))
 }
 
-// console.log(userName)
-
-
-
-let showPass = document.getElementById('show')
-let showHide = document.getElementById('text')
-
 function showPassword() {
     if (showPass.checked != false && showHide.innerHTML == 'Show') {
         password.setAttribute('type', 'text')
@@ -320,29 +214,5 @@ function showPassword() {
         showHide.innerHTML = 'Show'
     }
 }
-
-
-
-function deleteRow(id) {
-    fetch('http://172.16.100.89:3000/users/' + id, {
-        method: 'DELETE',
-        body: JSON.stringify({
-
-        })
-    })
-        .then(res => res.json())
-        .then(res1 => {
-            if (res1.statusCode == 200) {
-                alert(res1.message);
-                responseData();
-            }
-        })
-
-
-}
-
-
-
-
 
 
